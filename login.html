@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="nav.css" />
+    <title>home</title>
+  </head>
+  <body>
+    <div id="nav"></div>
+    <form>
+      <input type="text" required="" placeholder="EMAIL" id="useremail" />
+      <input
+        type="password"
+        required=""
+        placeholder="PASSWORD"
+        id="userpassword"
+      />
+      <input type="submit" />
+    </form>
+  </body>
+</html>
+
+<script type="module">
+  let navcount = document.querySelector("#nav");
+  import navbar from "./components/nav.js";
+  navcount.innerHTML = navbar();
+</script>
+<script>
+  let logindata = JSON.parse(localStorage.getItem("userCredential")) || [];
+
+  let form = document.querySelector("form");
+  form.addEventListener("submit", checkcredntial);
+  function checkcredntial(event) {
+    event.preventDefault();
+    let inputname = form.useremail.value;
+    let inputpass = form.userpassword.value;
+    check(inputname, inputpass);
+    if (check) {
+      let arr = [];
+      arr.push(inputname);
+      console.log(arr);
+      localStorage.setItem("recentuser", JSON.stringify(arr));
+      window.location.href = "sherch.html";
+    } else {
+      alert("incorrect credentials");
+      form.useremail.value = "";
+      form.userpassword.value = "";
+    }
+  }
+
+  function check(inputname, inputpass) {
+    logindata.forEach(function (el) {
+      if (el.mail == inputname && el.password == inputpass) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+  }
+</script>

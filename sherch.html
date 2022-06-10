@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
+    <link rel="stylesheet" href="nav.css" />
+
+    <title>Document</title>
+    <style>
+      .cont {
+        overflow-y: scroll;
+        height: 250px;
+        overflow-y: scroll;
+        height: 250px;
+        width: 40%;
+        margin: auto;
+      }
+      input#querry {
+        /* margin: auto; */
+        display: block;
+        width: 50%;
+
+        height: 40px;
+
+        border-radius: 12px;
+        position: relative;
+      }
+      .section_search {
+        margin-top: 70px;
+      }
+
+      .resname {
+        font-size: revert;
+        cursor: pointer;
+      }
+      .ipicon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      span.material-symbols-outlined {
+        position: absolute;
+        right: 26%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class>
+      <p class="uname"></p>
+    </div>
+    <div id="nav"></div>
+    <div class="section_search">
+      <!-- <input oninput="debounce(main,2000)" class="input" /> -->
+      <div class="ipicon">
+        <input oninput="debouncefunction(main, 1000)" type="text" id="querry" />
+        <span class="material-symbols-outlined"> search </span>
+      </div>
+      <div class="cont"></div>
+      <div class="box"></div>
+    </div>
+  </body>
+</html>
+<script type="module">
+  let navcount = document.querySelector("#nav");
+  import navbar from "./components/nav.js";
+  navcount.innerHTML = navbar();
+</script>
+
+<script>
+  let user = JSON.parse(localStorage.getItem("recentuser"));
+  let u = user[0];
+  let uname = document.querySelector(".uname");
+  uname.innerText = u;
+  let box = document.querySelector(".box");
+  let cont = document.querySelector(".cont");
+  let id;
+  let debouncefunction = (main, delay) => {
+    if (id) {
+      clearInterval(id);
+    }
+    id = setTimeout(function () {
+      main();
+    }, delay);
+  };
+  let main = () => {
+    let q = document.querySelector("#querry").value;
+    getdata(q);
+  };
+  let getdata = (q) => {
+    const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${q}`;
+    let fetdata = async () => {
+      let res = await fetch(url);
+      let raw = await res.json();
+      let x = raw.meals;
+      display(raw.meals);
+    };
+    fetdata();
+  };
+  let display = (data) => {
+    let c = document.querySelector("#querry").value;
+    if (c == "") {
+      cont.innerHTML = [];
+      console.log("empty");
+      document.querySelector(".cont").style.overflow = "hidden";
+    } else {
+      cont.innerHTML = [];
+      data.forEach((el) => {
+        let p = document.createElement("p");
+        p.setAttribute("class", "resname");
+        p.innerText = el.strMeal;
+        cont.append(p);
+      });
+    }
+  };
+</script>

@@ -1,0 +1,27 @@
+#nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: darkgray;
+}
+.sec2 > ul {
+  display: flex;
+}
+ul {
+  list-style: none;
+}
+.sec2 > ul > li {
+  margin-right: 70px;
+}
+a {
+  text-decoration: none;
+  color: gold;
+  font-size: 20px;
+  letter-spacing: 1px;
+}
+.sec1 > ul {
+  display: flex;
+}
+.sec1 > ul > li {
+  margin-left: 70px;
+}
